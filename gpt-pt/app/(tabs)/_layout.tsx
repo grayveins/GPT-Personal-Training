@@ -1,43 +1,78 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import React from "react";
+import { Tabs } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarStyle: {
+          backgroundColor: "#4A5568", // Matches the top header bar
+          borderTopColor: "#2D3748", // Darker border for contrast
+          height: 60,
+        },
+        tabBarActiveTintColor: "#FFFFFF", // White for active items
+        tabBarInactiveTintColor: "#CBD5E0", // Light gray for inactive items
+        tabBarLabelStyle: { 
+          fontSize: 12, 
+          fontWeight: "600",
+          marginBottom: 4,
+        },
+        tabBarItemStyle: {
+          paddingVertical: 6,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons 
+              name="home" 
+              size={22} 
+              color={color} 
+              style={{ 
+                marginBottom: -2,
+                transform: [{ scale: focused ? 1.1 : 1 }]
+              }} 
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="food-log"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Food Log",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons 
+              name="restaurant" 
+              size={22} 
+              color={color} 
+              style={{ 
+                marginBottom: -2,
+                transform: [{ scale: focused ? 1.1 : 1 }]
+              }} 
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="workout-log"
+        options={{
+          title: "Workout Log",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons 
+              name="barbell" 
+              size={22} 
+              color={color} 
+              style={{ 
+                marginBottom: -2,
+                transform: [{ scale: focused ? 1.1 : 1 }]
+              }} 
+            />
+          ),
         }}
       />
     </Tabs>
